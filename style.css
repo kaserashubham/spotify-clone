@@ -1,0 +1,53 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+.left {
+  width: 25vw;
+  padding: 4px;
+}
+.right {
+  width: 75vw;
+}
+
+.home ul li {
+  display: flex;
+  gap: 15px;
+  width: 15px;
+  list-style: none;
+  padding-top: 15px;
+}
+.heading {
+  /* display: flex; */
+  gap: 15px;
+  width: 100%;
+}
+
+.library {
+  min-height: 80vh;
+  position: relative;
+}
+
+.footer {
+  font-size: 10px;
+  gap: 10px;
+  position: absolute;
+  bottom: 5px;
+}
+.footer a {
+  color: grey;
+  text-decoration: none;
+  /* position: absolute; */
+  bottom: 2px;
+}
+
+.heading img {
+  width: 15px;
+}
+
+.heading h2 {
+  font-size: 17px;
+  /* padding-left: 10px; */
+}

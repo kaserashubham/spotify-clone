@@ -1,1 +1,48 @@
 /* This file can be used to add general class properties like flex, justify center etc */
+
+.red-border {
+  border: 2px solid red;
+  margin: 3px;
+  /* padding: 5px; */
+}
+
+.flex {
+  display: flex;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.bg-black {
+  background-color: black;
+  color: white;
+}
+
+.invert {
+  filter: invert(1);
+}
+
+.bg-grey {
+  background-color: #121212;
+}
+
+.round-border {
+  border-radius: 5px;
+}
+
+.m-1 {
+  margin: 5px;
+}
+
+.p-1 {
+  padding: 10px;
+}
+
+.bold-font {
+  font-weight: bolder;
+}
