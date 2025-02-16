@@ -147,11 +147,13 @@
 }
 
 .playbar {
+  filter: invert(1);
   position: absolute;
   bottom: 0;
-  background-color: rgb(48, 88, 48);
-  width: 100%;
+  background-color: rgb(199, 199, 199);
+  width: 98%;
   padding: 12px;
+  border-radius: 10px;
 }
 
 .spotify-playlists {
@@ -160,11 +162,54 @@
 
 .song-list {
   padding: 10px;
+  overflow: auto;
+  height: 600px;
 }
 
 .song-list ul {
-  padding-left: 20px;
+  /* padding-left: 20px; */
 }
 .song-list ul li {
-  list-style-type: decimal;
+  list-style-type: none;
+}
+
+.song-info-container {
+  justify-content: space-between;
+  gap: 40px;
+  padding: 10px 10px;
+  background-color: #1f1f1f;
+  /* border: 1px solid white; */
+  margin-top: 10px;
+  border-radius: 5px;
+}
+
+.songInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 5px 0;
+  margin: 2px 0;
+  width: 250px;
+}
+
+.song-info-container .play-button {
+  /* height: 30px; */
+  /* width: 30px; */
+}
+
+.playbar .seekbar {
+  margin: 10px 0px 5px 0;
+  border: 2px solid black;
+  position: relative;
+}
+
+.playbar .seekbar .circle {
+  height: 10px;
+  width: 10px;
+  background: #000;
+  border-radius: 50%;
+  position: absolute;
+  left: 0%;
+  top: -5px;
+  transition: left 0.5s;
 }

@@ -4,36 +4,53 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Spotify</title>
-    <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="utility.css" />
+    <link rel="stylesheet" href="style/style.css" />
+    <link rel="stylesheet" href="style/utility.css" />
   </head>
   <body>
     <div class="container flex bg-black">
       <!-- flex justify-center items-center -->
       <div class="left bg-black">
         <div class="home bg-grey round-border m-1 p-1">
-          <img class="invert" src="logo.svg" alt="logo" />
+          <img class="invert" src="images/logo.svg" alt="logo" />
           <!--  -->
           <ul>
             <li class="bold-font">
               <!-- <img src="home-svgrepo-com.svg" alt="" /> -->
-              <img class="invert" src="home.svg" alt="home" /> Home
+              <img class="invert" src="images/home.svg" alt="home" /> Home
             </li>
-            <li><img class="invert" src="search.svg" alt="search" />Search</li>
+            <li>
+              <img class="invert" src="images/search.svg" alt="search" />Search
+            </li>
           </ul>
         </div>
         <div class="library bg-grey round-border m-1 p-1">
           <div class="heading flex items-center">
-            <img class="invert" src="playlist.svg" alt="" />
+            <img class="invert" src="images/playlist.svg" alt="" />
             <h2>Your Library</h2>
           </div>
           <div class="song-list">
             <ul>
               <!-- <li>First Song</li> -->
+              <li>
+                <div class="song-info-container flex">
+                  <img src="images/music.svg" class="invert" alt="" />
+                  <div class="songInfo">
+                    <div class="songName">${songName[0]}</div>
+                    <div>Song Artist</div>
+                  </div>
+                  <img
+                    src="images/play-button.svg"
+                    class="invert"
+                    id="playSong"
+                    alt=""
+                  />
+                </div>
+              </li>
             </ul>
           </div>
-          <div class="footer flex justify-center">
-            <!-- <div> -->
+          <!-- <div class="footer flex justify-center">
+            
             <div>
               <a
                 href="https://www.spotify.com/in-en/legal/"
@@ -82,23 +99,15 @@
                 <span data-encore-id="type">Accessibility</span>
               </a>
             </div>
-            <!-- </div> -->
-            <!-- <a
-              draggable="false"
-              href="https://www.spotify.com/legal/cookies-policy/"
-              target="_blank"
-              rel="noopener"
-            >
-              <span data-encore-id="text">Cookies</span>
-            </a> -->
-          </div>
+            
+          </div> -->
         </div>
       </div>
       <div class="right bg-grey round-border">
         <div class="header flex">
           <div class="nav-buttons">
-            <img src="left.svg" class="invert" alt="" />
-            <img src="right.svg" class="invert" alt="" />
+            <img src="images/left.svg" class="invert" alt="" />
+            <img src="images/right.svg" class="invert" alt="" />
           </div>
           <div class="buttons">
             <button class="signupbtn">Sign Up</button>
@@ -175,14 +184,17 @@
         <div class="playbar">
           <div class="song-info"></div>
           <div class="song-button flex justify-center">
-            <img src="previous-back.svg" alt="" />
-            <img src="play.svg" alt="" />
-            <img src="next.svg" alt="" />
+            <img src="images/previous-back.svg" alt="" />
+            <img src="images/play-button.svg" alt="" />
+            <img src="images/next.svg" alt="" />
           </div>
           <div class="song-time"></div>
+          <div class="seekbar">
+            <div class="circle"></div>
+          </div>
         </div>
       </div>
     </div>
-    <script src="app.js"></script>
+    <script src="script/app.js"></script>
   </body>
 </html>
