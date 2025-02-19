@@ -12,6 +12,13 @@
       <!-- flex justify-center items-center -->
       <div class="left bg-black">
         <div class="home bg-grey round-border m-1 p-1">
+          <img
+            class="invert close"
+            src="images/close.svg"
+            height="25px"
+            width="25px"
+            alt=""
+          />
           <img class="invert" src="images/logo.svg" alt="logo" />
           <!--  -->
           <ul>
@@ -32,7 +39,7 @@
           <div class="song-list">
             <ul>
               <!-- <li>First Song</li> -->
-              <li>
+              <!-- <li>
                 <div class="song-info-container flex">
                   <img src="images/music.svg" class="invert" alt="" />
                   <div class="songInfo">
@@ -46,7 +53,7 @@
                     alt=""
                   />
                 </div>
-              </li>
+              </li> -->
             </ul>
           </div>
           <!-- <div class="footer flex justify-center">
@@ -106,6 +113,15 @@
       <div class="right bg-grey round-border">
         <div class="header flex">
           <div class="nav-buttons">
+            <div class="hamburger">
+              <img
+                src="images/hamburger.svg"
+                width="35px"
+                height="35px"
+                class="invert"
+                alt=""
+              />
+            </div>
             <img src="images/left.svg" class="invert" alt="" />
             <img src="images/right.svg" class="invert" alt="" />
           </div>
@@ -182,13 +198,18 @@
           </div>
         </div>
         <div class="playbar">
-          <div class="song-info"></div>
-          <div class="song-button flex justify-center">
-            <img src="images/previous-back.svg" alt="" />
-            <img src="images/play-button.svg" alt="" />
-            <img src="images/next.svg" alt="" />
+          <div class="song-info">
+            <div class="song-title">
+              <div class="song-name"></div>
+              <div class="artist-name"></div>
+            </div>
+            <div class="song-button flex justify-center">
+              <img id="prev" src="images/previous-back.svg" alt="" />
+              <img id="play-pause" src="images/play-button.svg" alt="" />
+              <img id="next" src="images/next.svg" alt="" />
+            </div>
+            <div class="song-time">00:00/00:00</div>
           </div>
-          <div class="song-time"></div>
           <div class="seekbar">
             <div class="circle"></div>
           </div>

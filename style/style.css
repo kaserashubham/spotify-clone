@@ -7,6 +7,7 @@
 .left {
   width: 25vw;
   padding: 4px;
+  transition: all 0.5s;
 }
 .right {
   width: 75vw;
@@ -68,7 +69,7 @@
   padding: 20px;
 }
 .nav-buttons {
-  /* display: flex; */
+  display: flex;
 }
 
 .card {
@@ -149,11 +150,15 @@
 .playbar {
   filter: invert(1);
   position: absolute;
-  bottom: 0;
+  bottom: 15px;
+  left: 5px;
   background-color: rgb(199, 199, 199);
-  width: 98%;
+  width: 97%;
   padding: 12px;
   border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
 }
 
 .spotify-playlists {
@@ -181,6 +186,7 @@
   /* border: 1px solid white; */
   margin-top: 10px;
   border-radius: 5px;
+  cursor: pointer;
 }
 
 .songInfo {
@@ -201,6 +207,7 @@
   margin: 10px 0px 5px 0;
   border: 2px solid black;
   position: relative;
+  cursor: pointer;
 }
 
 .playbar .seekbar .circle {
@@ -212,4 +219,73 @@
   left: 0%;
   top: -5px;
   transition: left 0.5s;
+}
+
+.playbar .song-info {
+  /* border: 2px solid black; */
+  color: #000;
+  display: flex;
+  justify-content: space-between;
+}
+
+.song-info .song-title {
+  margin-left: 20px;
+}
+.song-time {
+  margin-top: 5px;
+  color: black;
+}
+
+.song-button {
+  cursor: pointer;
+  gap: 10px;
+}
+.hamburger img {
+  display: none;
+}
+
+.home .close {
+  position: absolute;
+  right: 20px;
+  display: none;
+}
+
+@media (max-width: 1400px) {
+  /* … */
+  .left {
+    position: absolute;
+    height: 100vh;
+    left: -120%;
+    width: 380px;
+    z-index: 1;
+    background-color: black;
+  }
+
+  .right {
+    width: 100vw;
+    height: 100vh;
+    /* position: relative; */
+  }
+  .hamburger img {
+    display: block;
+  }
+
+  .home .close {
+    display: block;
+  }
+
+  .song-info {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .song-button img {
+    width: 30px;
+    height: 30px;
+  }
+
+  .playbar {
+    width: 93vw;
+  }
 }
