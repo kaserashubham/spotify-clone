@@ -148,14 +148,19 @@ function updateVolIcon(perc) {
   }
 }
 function volumeSeekHandler() {
-  document.querySelector(".vol-seek").addEventListener("click", (e) => {
-    if (e.target.className === "vol-seek") {
-      volPerc = (e.offsetX / e.target.getBoundingClientRect().width) * 100;
-      console.log(volPerc);
-      updateVolIcon(volPerc);
-      document.querySelector(".vol-seek .circle").style.left = `${volPerc}%`;
-      audio.volume = volPerc / 100;
-    }
+  // document.querySelector(".vol-seek").addEventListener("click", (e) => {
+  //   if (e.target.className === "vol-seek") {
+  //     volPerc = (e.offsetX / e.target.getBoundingClientRect().width) * 100;
+  //     console.log(volPerc);
+  //     updateVolIcon(volPerc);
+  //     document.querySelector(".vol-seek .circle").style.left = `${volPerc}%`;
+  //     audio.volume = volPerc / 100;
+  //   }
+  // });
+  document.querySelector(".vol-slider").addEventListener("input", (event) => {
+    console.log("range value:", event.target.value);
+    volPerc = event.target.value;
+    updateVolIcon(volPerc);
   });
 
   document
@@ -163,8 +168,10 @@ function volumeSeekHandler() {
     .addEventListener("click", (e) => {
       if (audio.muted) {
         updateVolIcon(volPerc);
+        document.querySelector(".vol-slider").style.accentColor = "#1fdf64";
       } else {
         updateVolIcon(0);
+        document.querySelector(".vol-slider").style.accentColor = "#999999";
       }
     });
 }

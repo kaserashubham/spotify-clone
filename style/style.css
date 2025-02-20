@@ -324,3 +324,10 @@
   gap: 5px;
   cursor: pointer;
 }
+
+.vol-slider {
+  accent-color: #1fdf64;
+  filter: invert(1);
+  /* accent-color: #999999; */
+  cursor: pointer;
+}
