@@ -5,6 +5,8 @@ let playpausebtn = document.querySelector("#play-pause");
 let audio = new Audio();
 let songsURL = "http://192.168.29.45:5500/songs/";
 let songs;
+let volPerc = 100;
+
 // let isMusicPlaying = false;
 
 async function getSongList() {
@@ -109,7 +111,9 @@ function updateSeekBar() {
       audio.currentTime
     )}/${convertSecondsToMinutes(audio.duration)}`;
     let seekbarPercent = (audio.currentTime / audio.duration) * 100;
-    document.querySelector(".circle").style.left = `${seekbarPercent}%`;
+    document.querySelector(
+      ".seekbar .circle"
+    ).style.left = `${seekbarPercent}%`;
   });
 }
 
@@ -118,10 +122,51 @@ function useSeekBar() {
     console.log(e.offsetX, e.target.getBoundingClientRect().width);
     let seekbarPercent =
       (e.offsetX / e.target.getBoundingClientRect().width) * 100;
-    document.querySelector(".circle").style.left = `${seekbarPercent}%`;
+    document.querySelector(
+      ".seekbar .circle"
+    ).style.left = `${seekbarPercent}%`;
     audio.currentTime =
       (e.offsetX / e.target.getBoundingClientRect().width) * audio.duration;
   });
+}
+
+function updateVolIcon(perc) {
+  let volIcon;
+  if (perc > 80 && perc <= 100) {
+    volIcon = "/images/volume-max.svg";
+  } else if (perc > 0) {
+    volIcon = "/images/volume.svg";
+  } else if (perc === 0) {
+    volIcon = "/images/volume-min.svg";
+  }
+  document.querySelector(".volume-container img").src = volIcon;
+  if (perc === 0) {
+    audio.muted = true;
+  } else {
+    audio.volume = volPerc / 100;
+    audio.muted = false;
+  }
+}
+function volumeSeekHandler() {
+  document.querySelector(".vol-seek").addEventListener("click", (e) => {
+    if (e.target.className === "vol-seek") {
+      volPerc = (e.offsetX / e.target.getBoundingClientRect().width) * 100;
+      console.log(volPerc);
+      updateVolIcon(volPerc);
+      document.querySelector(".vol-seek .circle").style.left = `${volPerc}%`;
+      audio.volume = volPerc / 100;
+    }
+  });
+
+  document
+    .querySelector(".volume-container img")
+    .addEventListener("click", (e) => {
+      if (audio.muted) {
+        updateVolIcon(volPerc);
+      } else {
+        updateVolIcon(0);
+      }
+    });
 }
 async function main() {
   songs = await getSongList();
@@ -199,6 +244,15 @@ async function main() {
       playMusic(songName[0]);
     }
   });
+
+  // update the volume icon according to percent
+  // set default value of volume
+  updateVolIcon(volPerc);
+
+  // adding eventlistener on volume seekbar
+  volumeSeekHandler();
+
+  //
 }
 
 main();

@@ -232,7 +232,7 @@
   margin-left: 20px;
 }
 .song-time {
-  margin-top: 5px;
+  margin-top: 3px;
   color: black;
 }
 
@@ -288,4 +288,39 @@
   .playbar {
     width: 93vw;
   }
+}
+
+.vol-seek {
+  /* border: 3px solid black; */
+  /* margin: 5px 0 5px 0; */
+  background-color: black;
+  height: 5px;
+  width: 100px;
+  position: relative;
+  border-radius: 5px;
+}
+
+.vol-seek .circle {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #000;
+  position: absolute;
+  top: -3px;
+  left: 100%;
+  transition: left 0.5s;
+}
+.vol-duration {
+  display: flex;
+  /* flex-direction: column; */
+  align-items: center;
+  gap: 15px;
+}
+.volume-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* position: relative; */
+  gap: 5px;
+  cursor: pointer;
 }
