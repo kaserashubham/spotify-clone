@@ -3,18 +3,42 @@ console.log("spotify app");
 // global variable
 let playpausebtn = document.querySelector("#play-pause");
 let audio = new Audio();
-let songsURL = "http://192.168.29.45:5500/songs/";
+let folder = "Heeramandi";
+// let folder = "Pushpa";
+let songsURL = `http://192.168.29.45:5500/songs`;
 let songs;
 let volPerc = 100;
 
 // let isMusicPlaying = false;
-
-async function getSongList() {
-  // let response = await fetch("http://localhost:5500/songs/");
+async function getAllFolderList() {
+  console.log("getting folder list");
+  let folderList = [];
   let response = await fetch(songsURL);
-  //   console.log(response);
+  // console.log(response);
   response = await response.text();
-  //   console.log(songs);
+  // console.log("folder data:", response);
+  let div = document.createElement("div");
+  div.innerHTML = response;
+  // console.log(div);
+  // console.log(div.querySelectorAll("li a")[1].href);
+  let as = div.querySelectorAll("li a");
+  for (const element of as) {
+    if (!element.href.endsWith("/")) {
+      let folderName = element.href;
+      folderName = folderName.replace(songsURL + "/", "");
+      folderList.push(folderName);
+      console.log(folderName);
+    }
+  }
+  console.log(folderList);
+  return folderList;
+}
+async function getSongList(folder) {
+  // let response = await fetch("http://localhost:5500/songs/");
+  let response = await fetch(songsURL + `/${folder}/`);
+  // console.log(response);
+  response = await response.text();
+  // console.log(response);
   let div = document.createElement("div");
   div.innerHTML = response;
   //   console.log(div.querySelectorAll("a"));
@@ -36,7 +60,7 @@ function updateSongList(songs) {
     let songName = element.split(".mp3");
     // console.log("list of songs is :", songName[0]);
 
-    songName[0] = songName[0].replace(songsURL, "");
+    songName[0] = songName[0].replace(songsURL + `/${folder}/`, "");
     songName[0] = songName[0].replaceAll("%20", " ");
 
     let songlistUL = document.querySelector(".song-list").querySelector("ul");
@@ -58,7 +82,7 @@ function updateSongList(songs) {
 function playMusic(track, pause = false) {
   // audio = new Audio("/songs/" + track + ".mp3");
 
-  audio.src = "/songs/" + track + ".mp3";
+  audio.src = `/songs/${folder}/` + track + ".mp3";
   if (!pause) {
     //
     // audio.src = track;
@@ -73,7 +97,7 @@ function playMusic(track, pause = false) {
 
 function pauseMusic() {
   playpausebtn.addEventListener("click", (e) => {
-    console.log("play-pause button clicked");
+    // console.log("play-pause button clicked");
     if (!audio.paused) {
       audio.pause();
       playpausebtn.src = "/images/play-button.svg";
@@ -85,7 +109,7 @@ function pauseMusic() {
       let songName = audio.src.split(".mp3");
       // console.log("list of songs is :", songName[0]);
 
-      songName[0] = songName[0].replace(songsURL, "");
+      songName[0] = songName[0].replace(songsURL + `/${folder}/`, "");
       songName[0] = songName[0].replaceAll("%20", " ");
       document.querySelector(".song-name").innerText = songName[0];
       document.querySelector(".artist-name").innerText = "Album Artist";
@@ -119,7 +143,7 @@ function updateSeekBar() {
 
 function useSeekBar() {
   document.querySelector(".seekbar").addEventListener("click", (e) => {
-    console.log(e.offsetX, e.target.getBoundingClientRect().width);
+    // console.log(e.offsetX, e.target.getBoundingClientRect().width);
     let seekbarPercent =
       (e.offsetX / e.target.getBoundingClientRect().width) * 100;
     document.querySelector(
@@ -158,7 +182,7 @@ function volumeSeekHandler() {
   //   }
   // });
   document.querySelector(".vol-slider").addEventListener("input", (event) => {
-    console.log("range value:", event.target.value);
+    // console.log("range value:", event.target.value);
     volPerc = event.target.value;
     updateVolIcon(volPerc);
   });
@@ -175,34 +199,83 @@ function volumeSeekHandler() {
       }
     });
 }
+
+function updateCards(folders) {
+  for (const element of folders) {
+    document.querySelector(".card-container").innerHTML += `<div class="card">
+                <div class="play">
+                  <svg
+                    fill="#000000"
+                    width="16px"
+                    height="16px"
+                    viewBox="0 0 32 32"
+                    version="1.1"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                    <g
+                      id="SVGRepo_tracerCarrier"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    ></g>
+                    <g id="SVGRepo_iconCarrier">
+                      <title>play</title>
+                      <path
+                        d="M5.92 24.096q0 1.088 0.928 1.728 0.512 0.288 1.088 0.288 0.448 0 0.896-0.224l16.16-8.064q0.48-0.256 0.8-0.736t0.288-1.088-0.288-1.056-0.8-0.736l-16.16-8.064q-0.448-0.224-0.896-0.224-0.544 0-1.088 0.288-0.928 0.608-0.928 1.728v16.16z"
+                      ></path>
+                    </g>
+                  </svg>
+                </div>
+                <img
+                  src="https://seed-mix-image.spotifycdn.com/v6/img/artist/0GF4shudTAFv8ak9eWdd4Y/en/default"
+                  alt=""
+                />
+                <h2>${element}</h2>
+                <p>Lorem ipsum dolor sit amet.</p>
+              </div>`;
+  }
+}
+
 async function main() {
-  songs = await getSongList();
-  console.log(songs[0]);
+  // folder = "Heeramandi";
+
+  // folder = "Pushpa";
+
+  // getAllFolderList
+  let allFolder = await getAllFolderList();
+  // setting the first folder as default
+  folder = allFolder[0];
+
+  // Add cards using folder list
+  updateCards(allFolder);
+  // console.log(folder);
+  songs = await getSongList(folder);
+  // console.log(songs[0]);
   updateSongList(songs);
   // set first song of the list as source
   // audio.src = songs[0];
   let songName = songs[0].split(".mp3");
   // console.log("list of songs is :", songName[0]);
 
-  songName[0] = songName[0].replace(songsURL, "");
+  songName[0] = songName[0].replace(songsURL + `/${folder}/`, "");
   songName[0] = songName[0].replaceAll("%20", " ");
   playMusic(songName[0], true);
   let currentSong = document.querySelectorAll(".song-list li");
   // console.log(currentSong);
   currentSong.forEach((element) => {
-    console.log(element);
+    // console.log(element);
     // element.querySelector("#playSong")
     element
       .querySelector(".song-info-container")
       .addEventListener("click", (event) => {
         // console.log("play button clicked");
 
-        console.log(element.querySelector(".songName").innerText);
+        // console.log(element.querySelector(".songName").innerText);
         playMusic(element.querySelector(".songName").innerText);
       });
   });
 
-  console.log(playpausebtn.src);
+  // console.log(playpausebtn.src);
   pauseMusic();
 
   // listen for time update event
@@ -230,7 +303,7 @@ async function main() {
     if (i > 0) {
       // songName = songs[songs.length - 1].split(".mp3");
       songName = songs[i - 1].split(".mp3");
-      songName[0] = songName[0].replace(songsURL, "");
+      songName[0] = songName[0].replace(songsURL + `/${folder}/`, "");
       songName[0] = songName[0].replaceAll("%20", " ");
       playMusic(songName[0]);
     }
@@ -246,7 +319,7 @@ async function main() {
     if (i + 1 < songs.length) {
       // songName = songs[0].split(".mp3");
       songName = songs[i + 1].split(".mp3");
-      songName[0] = songName[0].replace(songsURL, "");
+      songName[0] = songName[0].replace(songsURL + `/${folder}/`, "");
       songName[0] = songName[0].replaceAll("%20", " ");
       playMusic(songName[0]);
     }

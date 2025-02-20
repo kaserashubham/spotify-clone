@@ -3,7 +3,11 @@
   padding: 0;
   font-family: sans-serif;
 }
-
+:root {
+  --play-op: 0;
+  --play-top: 170px;
+  /* --play-top: 160px; */
+}
 .left {
   width: 25vw;
   padding: 4px;
@@ -76,7 +80,7 @@
   width: 160px;
   padding: 10px;
   border-radius: 5px;
-  background-color: #252525;
+  background-color: #121212;
 }
 
 .card-container {
@@ -91,6 +95,13 @@
 .card {
   /* padding: 5px; */
   position: relative;
+}
+
+.card:hover {
+  --play-op: 1;
+  --play-top: 160px;
+  background-color: #252525;
+  cursor: pointer;
 }
 .card > * {
   /* margin: 5px; */
@@ -111,9 +122,10 @@
   justify-content: center;
   align-items: center;
   position: absolute;
-  top: 160px;
+  top: var(--play-top);
   right: 20px;
-  /* opacity: 0; */
+  opacity: var(--play-op);
+  transition: all 0.2s;
 }
 
 .signupbtn {
