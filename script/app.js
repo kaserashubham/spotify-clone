@@ -37,6 +37,7 @@ async function getSongList(folder) {
   // let response = await fetch("http://localhost:5500/songs/");
   let response = await fetch(songsURL + `/${folder}/`);
   // console.log(response);
+  // console.log(songsURL + `/${folder}/`);
   response = await response.text();
   // console.log(response);
   let div = document.createElement("div");
@@ -51,16 +52,16 @@ async function getSongList(folder) {
     }
   }
 
-  //   console.log(songs);
+  // console.log(songs);
   return songs;
 }
 
 function updateSongList(songs) {
   for (let element of songs) {
     let songName = element.split(".mp3");
-    // console.log("list of songs is :", songName[0]);
 
     songName[0] = songName[0].replace(songsURL + `/${folder}/`, "");
+    console.log("list of songs is :", songName[0]);
     songName[0] = songName[0].replaceAll("%20", " ");
 
     let songlistUL = document.querySelector(".song-list").querySelector("ul");
@@ -181,6 +182,10 @@ function volumeSeekHandler() {
   //     audio.volume = volPerc / 100;
   //   }
   // });
+
+  // update the volume icon according to percent
+  // set default value of volume
+  updateVolIcon(volPerc);
   document.querySelector(".vol-slider").addEventListener("input", (event) => {
     // console.log("range value:", event.target.value);
     volPerc = event.target.value;
@@ -202,6 +207,8 @@ function volumeSeekHandler() {
 
 function updateCards(folders) {
   for (const element of folders) {
+    console.log("folder name", element);
+    let albumArt = `${songsURL}/${element}/cover.jpg`;
     document.querySelector(".card-container").innerHTML += `<div class="card">
                 <div class="play">
                   <svg
@@ -227,30 +234,24 @@ function updateCards(folders) {
                   </svg>
                 </div>
                 <img
-                  src="https://seed-mix-image.spotifycdn.com/v6/img/artist/0GF4shudTAFv8ak9eWdd4Y/en/default"
+                  src="${albumArt}"
                   alt=""
                 />
-                <h2>${element}</h2>
-                <p>Lorem ipsum dolor sit amet.</p>
+                <h2 class='album-name'>${element}</h2>
+                <p></p>
               </div>`;
   }
 }
-
-async function main() {
-  // folder = "Heeramandi";
-
-  // folder = "Pushpa";
-
-  // getAllFolderList
-  let allFolder = await getAllFolderList();
-  // setting the first folder as default
-  folder = allFolder[0];
-
-  // Add cards using folder list
-  updateCards(allFolder);
-  // console.log(folder);
+function clearSongList() {
+  let songlistUL = document.querySelector(".song-list").querySelector("ul");
+  // let songLIstLI = document.createElement("li");
+  songlistUL.innerHTML = "";
+}
+async function songListHandler(folder) {
+  // console.log("selected folder:", folder);
+  clearSongList();
   songs = await getSongList(folder);
-  // console.log(songs[0]);
+  // console.log(songs);
   updateSongList(songs);
   // set first song of the list as source
   // audio.src = songs[0];
@@ -274,25 +275,9 @@ async function main() {
         playMusic(element.querySelector(".songName").innerText);
       });
   });
+}
 
-  // console.log(playpausebtn.src);
-  pauseMusic();
-
-  // listen for time update event
-  updateSeekBar();
-
-  // add functionality to use seekbar
-  useSeekBar();
-  // add functions for hamburger
-  document.querySelector(".hamburger").addEventListener("click", (e) => {
-    document.querySelector(".left").style.left = "0%";
-  });
-
-  document.querySelector(".home .close").addEventListener("click", (e) => {
-    document.querySelector(".left").style.left = "-120%";
-  });
-
-  // adding event on prev and next
+function songController() {
   prev.addEventListener("click", (e) => {
     let i;
     for (i = 0; i < songs.length; i++) {
@@ -325,9 +310,63 @@ async function main() {
     }
   });
 
-  // update the volume icon according to percent
-  // set default value of volume
-  updateVolIcon(volPerc);
+  // console.log(playpausebtn.src);
+  pauseMusic();
+
+  // listen for time update event
+  updateSeekBar();
+
+  // add functionality to use seekbar
+  useSeekBar();
+}
+
+function sideBarController() {
+  document.querySelector(".hamburger").addEventListener("click", (e) => {
+    document.querySelector(".left").style.left = "0%";
+  });
+
+  document.querySelector(".home .close").addEventListener("click", (e) => {
+    document.querySelector(".left").style.left = "-120%";
+  });
+}
+function stopMusic() {
+  audio.currentTime = 0;
+  playpausebtn.src = "/images/play-button.svg";
+}
+function albumControler() {
+  let allCards = document.querySelectorAll(".card ");
+
+  for (const element of allCards) {
+    element.addEventListener("click", (e) => {
+      let folderName = element.querySelector(".album-name").innerHTML;
+      folder = folderName;
+      stopMusic();
+      songListHandler(folderName);
+    });
+  }
+}
+async function main() {
+  // folder = "Heeramandi";
+
+  // folder = "Pushpa";
+
+  // getAllFolderList
+  let allFolder = await getAllFolderList();
+  // setting the first folder as default
+  folder = allFolder[0];
+  // Add cards using folder list
+  updateCards(allFolder);
+  // console.log(folder);
+
+  songListHandler(folder);
+
+  albumControler();
+
+  // add functions for hamburger
+  sideBarController();
+
+  // adding event on prev and next
+  songController();
 
   // adding eventlistener on volume seekbar
   volumeSeekHandler();
