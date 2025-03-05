@@ -5,7 +5,7 @@ let playpausebtn = document.querySelector("#play-pause");
 let audio = new Audio();
 let folder = "Heeramandi";
 // let folder = "Pushpa";
-let songsURL = `http://192.168.29.45:5500/songs`;
+let songsURL = `http://127.0.0.1:5500/songs`;
 let songs;
 let volPerc = 100;
 
